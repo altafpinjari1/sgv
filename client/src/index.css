@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Outfit", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth !important;
+}
+
+body {
+  background-color: #FFFFFF;
+}
+
+#root{
+  width: 100%;
+  overflow: hidden;
+  height: auto;
+}
+
+
+
+:root {
+  --background: #f3f3ea;
+  --hilight: #323D66;
+  --textColor: #ffffff;
+  --ahover: #858585;
+}
+
+.shine-red {
+  animation: shine-red 2s infinite;
+}
+
+.shine-royalblue {
+  animation: shine-royalblue 2s infinite;
+}
+
+@keyframes shine-red {
+  0% {
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 0, 0, 1);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  }
+}
+
+@keyframes shine-royalblue {
+  0% {
+    text-shadow: 0 0 10px rgba(65, 105, 225, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(65, 105, 225, 1);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(65, 105, 225, 0.5);
+  }
+}
+
+
+
+
+.swiper-slide {
+  width: 100%;
+  height: 80vh;
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  object-fit: contain;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  gap: 10px;
+}
+
+
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #323D66, #f3f3ea);
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #44a0e6, #66d9ef);
+}
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  position: relative;
+}
+
+.studentImg {
+  position: absolute;
+  right: 25.3%;
+  width: 180px;
+  height: 190px;
+  z-index: 1;
+  background-color: var(--textColor);
+  border: 1px solid #ddd;
+}
+
+table tr td:nth-child(1) {
+  width: 30%;
+  font-weight: 500;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+}
+
+
+  .nav-sec{
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .navbar{
+    width: 100%;
+    height: fit-content;
+    z-index: 99;
+  }
+
+@media screen and (max-width:670px) {
+  header{
+    display: none !important;
+  }
+
+  .navbar{
+    width: 100%;
+    height:100vh;
+    position:absolute;
+
+  }
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background-color: red;
+    position: absolute;
+    top: 0;
+    /* z-index:999 !important; */
+  }
+
+}
