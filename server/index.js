@@ -1,41 +1,42 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import connectdb from "./db/connectdb.js";
-import userRoute from "./routes/user.route.js"
+const express = require('express');
+const dotenv = require('dotenv');
+const connectDB = require('./config/connectdb');
+const admissionRoutes = require('./routes/admission');
+const queryRoutes = require('./routes/query');
+const uploadRoutes = require('./routes/upload'); // Import upload.js
+const cors = require('cors');
+const path = require('path');
 
-// import cookieParser from "cookie-parser";
-
-
-dotenv.config({});
-connectdb();
-const PORT = 8080;
-
-
+dotenv.config();
 
 const app = express();
 
-//middleware
-app.use(express.urlencoded({extended:true}));
+// Connect to MongoDB
+connectDB();
+
+// CORS Configuration
+const corsOptions = {
+    origin: 'http://localhost:5173', // Replace with your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
-// app.use(cookieParser());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// app.corsOptions = {
-//   origin:'http://localhost:5174/',
-//   credentials:true,
-// }
-// app.use(cors(corsOptions));
+// Routes
+app.use('/api/admission', admissionRoutes);
+app.use('/api/query', queryRoutes);
+app.use('/api', uploadRoutes); // Use uploadRoutes for /api routes
 
-// routes
-// app.use("/api/v1/user", userRoute);
+app.get('/', (req, res) => {
+    res.send('API is running...');
+});
 
-// "https://localhost:8080/api/v1/user/onlineAdmission"
-// app.get("/home", (req, res) => {
-//   return res
-//     .status(200)
-//     .json({ message: "I am coming for backend", success: true });
-// });
-
+// Start server
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });

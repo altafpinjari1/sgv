@@ -63,13 +63,39 @@ function Home() {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [subject, setSubject] = useState('');
-  const [query, setQuery] = useState('');
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Form submitted:', { name, email, phoneNumber, subject, query });
-    // Add your form submission logic here
+    try {
+      const response = await fetch('http://localhost:5000/api/query', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, phoneNumber, subject, message }),
+      });
+  
+      if (!response.ok) {
+        const errorText = await response.text(); // Get error text from the response
+        throw new Error(`Failed to submit query: ${errorText}`);
+      }
+  
+      // Clear form fields
+      setName('');
+      setEmail('');
+      setPhoneNumber('');
+      setSubject('');
+      setMessage('');
+  
+      alert('Query submitted successfully!');
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert(`Error: ${error.message}`);
+    }
   };
+  
+
   return (
     <>
       <section>
@@ -214,73 +240,75 @@ function Home() {
       </section>
 
       <section className='w-full m-auto h-fit md:h-[82vh] py-10 md:py-20 bg-slate-100'>
-        <div className='w-10/12 m-auto flex justify-between flex-col md:flex-row gap-2'>
-          <div className='relative w-full md:w-5/12 h-full flex justify-center items-center'>
-            <div className='absolute top-[4%] left-6 w-[50vh] md:w-[65vh] md:h-[54vh] bg-[#323D66] rounded'></div>
-            <img src={studentimg} alt="" className='z-[1] p-2 rounded-xl' />
-          </div>
-          <div className='w-full md:w-5/12 h-fit md:p-10'>
-            <h2 className='text-2xl md:text-4xl font-semibold text-[#323D66]'>Get Enquiry</h2>
-            <form onSubmit={handleSubmit} className='py-10'>
-              <div className="mb-4">
-                <input
-                  className="border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="name"
-                  type="text"
-                  placeholder='Enter Name'
-                  value={name}
-                  onChange={(event) => setName(event.target.value)}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <input
-                  className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="email"
-                  type="email"
-                  placeholder='Enter Email'
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <input
-                  className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="phoneNumber"
-                  type="tel"
-                  placeholder='Enter Phone Number'
-                  value={phoneNumber}
-                  onChange={(event) => setPhoneNumber(event.target.value)}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <input
-                  className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="subject"
-                  type="text"
-                  placeholder='Enter Subject'
-                  value={subject}
-                  onChange={(event) => setSubject(event.target.value)}
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <textarea
-                  className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="query"
-                  placeholder='Enter Message'
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  required
-                />
-              </div>
-              <button type='submit' className='bg-[#323D66] text-[#FFF] py-2 px-6 rounded-md flex items-center justify-center gap-2'>Submit Query <i class="ri-arrow-right-line"></i></button>
-            </form>
-          </div>
+      <div className='w-10/12 m-auto flex justify-between flex-col md:flex-row gap-2'>
+        <div className='relative w-full md:w-5/12 h-full flex justify-center items-center'>
+          <div className='absolute top-[4%] left-6 w-[50vh] md:w-[65vh] md:h-[54vh] bg-[#323D66] rounded'></div>
+          <img src={studentimg} alt="" className='z-[1] p-2 rounded-xl' />
         </div>
-      </section>
+        <div className='w-full md:w-5/12 h-fit md:p-10'>
+          <h2 className='text-2xl md:text-4xl font-semibold text-[#323D66]'>Get Enquiry</h2>
+          <form onSubmit={handleSubmit} className='py-10'>
+            <div className="mb-4">
+              <input
+                className="border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="name"
+                type="text"
+                placeholder='Enter Name'
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <input
+                className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="email"
+                type="email"
+                placeholder='Enter Email'
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <input
+                className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="phoneNumber"
+                type="tel"
+                placeholder='Enter Phone Number'
+                value={phoneNumber}
+                onChange={(event) => setPhoneNumber(event.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <input
+                className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="subject"
+                type="text"
+                placeholder='Enter Subject'
+                value={subject}
+                onChange={(event) => setSubject(event.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <textarea
+                className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="message"
+                placeholder='Enter Message'
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                required
+              />
+            </div>
+            <button type='submit' className='bg-[#323D66] text-[#FFF] py-2 px-6 rounded-md flex items-center justify-center gap-2'>
+              Submit Query <i className="ri-arrow-right-line"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
     </>
   )
 }

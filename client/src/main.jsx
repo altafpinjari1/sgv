@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         element: <OnlineAdmission/>
       },
       {
-        path:"/AdmissionReceipt",
+        path:"/AdmissionReceipt/:id",
         element: <AdmissionReceipt/>
       },
       {
