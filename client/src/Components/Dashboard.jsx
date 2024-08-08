@@ -76,12 +76,17 @@ function Dashboard() {
       if (response.ok) {
         const resultText = await response.text();
         setResult(`Success: ${resultText}`);
+        alert(`Success: ${resultText}`);
+        setFile(null);
+        document.getElementById("fileInput").value = "";
       } else {
         const errorText = await response.text();
         setResult(`Error: ${errorText}`);
+        alert(`Error: ${errorText}`);
       }
     } catch (error) {
       setResult(`Error: ${error.message}`);
+      alert(`Error: ${error.message}`);
     }
   };
 
@@ -163,6 +168,7 @@ function Dashboard() {
           </h4>
           <div className="w-6/12 m-auto flex flex-col gap-2 py-4">
             <input
+              id="fileInput"
               type="file"
               accept=".xlsx"
               onChange={handleFileChange}
